@@ -1,4 +1,8 @@
-const GET_RANDON_NUMBER =  (from, to) => {
+const COUNT = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
+
+const getRandomNumber =  (from, to) => {
   if (to <= from && to <= 0) {
     return false;
   }
@@ -6,14 +10,14 @@ const GET_RANDON_NUMBER =  (from, to) => {
   return Math.round(rand);
 };
 
-const GET_LEGHT_CHECK = function (str, MAX_LENGHT) {
+const getLeghtCheck = function (str, MAX_LENGHT) {
   if  (MAX_LENGHT  <= str || str === '') {
     return false;
   }
   return true;
 };
 
-GET_LEGHT_CHECK();
+getLeghtCheck();
 
 let currentCount = 0;
 
@@ -45,23 +49,21 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const COUNT = 25;
-
-const PROFILE = () => ({
+const profile = () => ({
   id: counter(),
-  url: 'photos/' + currentCount + '.jpg', //eslint-disable-line prefer-template,
-  description: 'описание',
-  likes: GET_RANDON_NUMBER(15, 200),
-  coments: [
+  url: 'photos/' + currentCount + '.jpg',
+  description: 'Я считаю, что снимок получился смешным', //описание как массив в задании не указан, поэтому один на всех
+  likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
+  comments: [
     {
       id: currentCount,
-      avatar: 'img/avatar-' + GET_RANDON_NUMBER(1, 6) + '.png', //eslint-disable-line prefer-template
-      message: MESSAGE[GET_RANDON_NUMBER(0, MESSAGE.length - 1)],
-      name: NAMES[GET_RANDON_NUMBER(0, NAMES.length - 1)],
+      avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.png',
+      message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],//для формирования текста комментария можно брать и 1 сообщение, согласно заданию
+      name: NAMES[getRandomNumber(0, NAMES.length - 1)],
     },
   ],
 });
 
-const PHOTO_DESCRIPTION = Array.from({length: COUNT}, PROFILE);
+const photoDescription = Array.from({length: COUNT}, profile);
 
-PHOTO_DESCRIPTION();
+photoDescription;//для es-lint
