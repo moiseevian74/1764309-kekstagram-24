@@ -1,6 +1,8 @@
 const COUNT = 25;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
+const MIN_AVATAR = 1;
+const MAX_AVATAR = 6;
 
 const getRandomNumber =  (from, to) => {
   if (to <= from && to <= 0) {
@@ -19,7 +21,7 @@ const getLeghtCheck = function (str, MAX_LENGHT) {
 
 getLeghtCheck();
 
-let currentCount = 0;
+let currentCount = 1;
 
 function makeCounter() {
   return function() {
@@ -49,7 +51,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const profile = () => ({
+const getArrayProfiles = () => ({
   id: counter(),
   url: `photos/${  currentCount  }.jpg`,
   description: 'Я считаю, что снимок получился смешным', //описание как массив в задании не указан, поэтому один на всех
@@ -57,13 +59,13 @@ const profile = () => ({
   comments: [
     {
       id: currentCount,
-      avatar: `img/avatar-${  getRandomNumber(1, 6)  }.png`,
+      avatar: `img/avatar-${  getRandomNumber(MIN_AVATAR, MAX_AVATAR)  }.png`,
       message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],//для формирования текста комментария можно брать и 1 сообщение, согласно заданию
       name: NAMES[getRandomNumber(0, NAMES.length - 1)],
     },
   ],
 });
 
-const photoDescription = Array.from({length: COUNT}, profile);
+const photoDescription = Array.from({length: COUNT}, getArrayProfiles);
 
 photoDescription;//для es-lint
