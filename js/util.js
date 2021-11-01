@@ -20,7 +20,7 @@ const getLeghtCheck = function (str, MAX_LENGHT) {
 export {getLeghtCheck};
 
 // Функция - счетчик
-let currentCount = 1;
+let currentCount = 0;
 
 function makeCounter() {
   return function() {
