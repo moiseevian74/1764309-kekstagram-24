@@ -1,4 +1,4 @@
-import {getRandomNumber, getLeghtCheck, counter, currentCount} from 'util.js';
+import {getRandomNumber, getLeghtCheck, counter, currentCount} from './util.js';
 
 const COUNT = 25;
 const MIN_LIKES = 15;
@@ -41,7 +41,6 @@ const getArrayProfiles = () => ({
   ],
 });
 
-const photoDescription = Array.from({length: COUNT}, getArrayProfiles);
+const photoDescription = () => Array.from({length: COUNT}, getArrayProfiles);//метод формирования массива объектов
 
-photoDescription;//для es-lint
-getLeghtCheck;//для es-lint
+export {getArrayProfiles, photoDescription, getLeghtCheck};
