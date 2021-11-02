@@ -30,4 +30,6 @@ function makeCounter() {
 
 const counter = makeCounter();
 
-export {counter, currentCount};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {counter, currentCount, isEscapeKey};
