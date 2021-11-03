@@ -1,5 +1,4 @@
 import './data.js';
-import {usersPicture} from './picture.js';
 import {isEscapeKey} from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -17,10 +16,9 @@ const bigPictureClose = document.querySelector('.big-picture__cancel');//кре�
 
 const socialCommentFragment = document.createDocumentFragment();
 
-const fillComments = (item) => {//комментарии к изображению
-
-  item.forEach(({avatar, name, message}) => {
-    const commentElement = socialComment.cloneNode(true);
+const fillComments = (items) => {//комментарии к изображению
+  items.forEach(({avatar, name, message}) => {
+    const commentElement = socialComment;
     commentElement.querySelector('.social__picture').src = avatar;
     commentElement.querySelector('.social__picture').alt = name;
     commentElement.querySelector('.social__text').textContent = message;
@@ -31,12 +29,12 @@ const fillComments = (item) => {//комментарии к изображени
   return socialComments;
 };
 
-const fillBigPicture = (picture) => {//отрисовка комметариев
-  img.src = usersPicture[picture].url;
-  likesСount.textContent = usersPicture[picture].likes;
-  commentsCount.textContent = usersPicture[picture].comments;
-  socialCaption.textContent = usersPicture[picture].description;
-  fillComments(usersPicture[picture].comments);
+const fillBigPicture = ({url, likes, comments, description}) => {//отрисовка комметариев
+  img.src = url;
+  likesСount.textContent = likes;
+  commentsCount.textContent = comments.length;
+  socialCaption.textContent = description;
+  fillComments(comments);
   openBigPicture();
 };
 

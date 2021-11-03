@@ -8,7 +8,7 @@ const usersPicture = photoDescription();//запись результата фу
 
 const pictureFragment = document.createDocumentFragment();
 
-usersPicture.forEach(({id, url, likes, comments}) => {//деструктуризация параметров объекта в переменные
+usersPicture.forEach(({url, likes, comments, description}) => {//деструктуризация параметров объекта в переменные
   const pictureElement = pictureTemplate.cloneNode(true);//клонирование шаблона
   pictureElement.querySelector('.picture__img').src = url;//присваивание источнику значение параметра объекта из массива
   pictureElement.querySelector('.picture__likes').textContent = likes;//вывести колличесво лайков под фотографией
@@ -16,7 +16,7 @@ usersPicture.forEach(({id, url, likes, comments}) => {//деструктуриз
 
   pictureFragment.appendChild(pictureElement);//создание макета фотографии с данными на каждой итерации
   pictureElement.addEventListener('click', () => {
-    fillBigPicture(id);
+    fillBigPicture({url, likes, comments, description});
   });
 });
 
