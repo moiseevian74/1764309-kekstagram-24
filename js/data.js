@@ -26,15 +26,29 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+const DESCRIPTION = [
+  'Я считаю, что снимок получился смешным.',
+  'Хорошая фотография - это приятное воспоминание, запечатленное навсегда.',
+  'Просто вот! :)',
+  'Моя жизнь хороша только на фото >_<',
+  'Хочу пиццы',
+  '( ͡° ͜ʖ ͡°)',
+  'Делюсь фоточкой, с вас лайки!',
+  'Упс, случайно ткнул на камеру',
+  'Kekstagram — это просто Twitter для людей, которые выходят на улицу.',
+  'Страшнее фотографии в паспорте может быть только эта',
+  'Я - описание фотографии',
+];
+
 const getArrayProfiles = () => ({
   id: counter(),
   url: `photos/${  currentCount  }.jpg`,
-  description: 'Я считаю, что снимок получился смешным', //описание как массив в задании не указан, поэтому один на всех
+  description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)], //описание как массив в задании не указан, поэтому один на всех
   likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
   comments: [
     {
       id: currentCount,
-      avatar: `img/avatar-${  getRandomNumber(MIN_AVATAR, MAX_AVATAR)  }.png`,
+      avatar: `img/avatar-${  getRandomNumber(MIN_AVATAR, MAX_AVATAR)  }.svg`,
       message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],//для формирования текста комментария можно брать и 1 сообщение, согласно заданию
       name: NAMES[getRandomNumber(0, NAMES.length - 1)],
     },
