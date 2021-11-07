@@ -1,6 +1,10 @@
 import {isEscapeKey} from './util.js';
 import {getLeghtCheck} from './util.js';
 
+const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAG_LENGTH = 20;
+const MAX_HASHTAG_COUNT = 5;
+
 const uploadFile = document.querySelector('#upload-file');//изначальное состояние поля для загрузки изображения
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');//форма редактирования изображения
 const body = document.querySelector('body');
@@ -9,32 +13,36 @@ const uploadCancel = document.querySelector('#upload-cancel');//кнопка д�
 const textHashtags = document.querySelector('.text__hashtags');//input для добавления хэш-тегов
 const btnSubmit = document.querySelector('.img-upload__submit');//кнопка отправки формы
 const regularValue = /^#[A-Za-zА-Яа-яЁё0-9#]{1,19}$|(^$)/;//регулярное выражение для хэш-тегов
-const symbols = /^#\S*#\S*/;
-const MAX_COMMENT_LENGTH = 140;
-const MAX_HASHTAG_COUNT = 5;
+
+function findDuplicates(array) {//Функция для поиска дубликата
+  return (new Set(array)).size !== array.length;
+}
 
 const checkTextHashtags = () => {//проверка валидности поля хэш-тега на превышение лимита введеных символов или неккоретное ввод
-  const hashtagText = textHashtags.value.toLowerCase();//возвращает значение строки, на которой он был вызван, преобразованное в нижний регистр
-  const hashtagArray = hashtagText.split('');//метод разделяет строку на массив строк путем разделения строки на подстроки
-  const tempHashtagArray = [];
-  textHashtags.setCustomValidity('');
-  for (let i = 0; i < hashtagArray.length; i++) {
-    if (hashtagArray[i] === '#') {
-      textHashtags.setCustomValidity('Хэш-тег не может состоять только из одной решётки.');
-    } else if (!regularValue.test(hashtagArray[i])) {
-      textHashtags.setCustomValidity('Строка после решётки должна состоять из 20 букв и чисел, включая хештег и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;');
-    } else if (symbols.test(hashtagArray[i])) {
-      textHashtags.setCustomValidity('Хэш-теги должны разделяться пробелами.');
-    } else if (hashtagArray.length > MAX_HASHTAG_COUNT) {
-      textHashtags.setCustomValidity('Нельзя указать больше 5 хэш-тегов');
-    } else if (tempHashtagArray.includes(hashtagArray[i])) {
-      textHashtags.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды.');
-    } else {
-      tempHashtagArray.push(hashtagArray[i]);
-    }
+  const hashtagArray = textHashtags.value.toLowerCase().split(' '); //Переводим строку в нижний регистр и создаем массив разделением строки пробелами/Метод split() разбивает объект String на массив строк путём разделения строки указанной подстрокой
 
-    textHashtags.reportValidity();//проверка валидности поля на каждый ввод символа
-  }
+  hashtagArray.forEach((hashtag) => {
+    if (hashtagArray[0] === '') {
+      textHashtags.value = textHashtags.value.trim();//Метод trim() удаляет пробельные символы с начала и конца строки
+      textHashtags.setCustomValidity('');
+    } else if (!hashtag.startsWith('#')) {
+      textHashtags.setCustomValidity('хеш-тег должен начинаться с решётки #');
+    } else if (hashtag === '#'){
+      textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки #');
+    } else if (hashtag.length > MAX_HASHTAG_LENGTH){
+      textHashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку #');
+    } else if (!regularValue.test(hashtag)){
+      textHashtags.setCustomValidity('хеш-тег не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;');
+    } else if (hashtagArray.length > MAX_HASHTAG_COUNT){
+      textHashtags.setCustomValidity('нельзя указать больше пяти хэш-тегов');
+    } else if (findDuplicates(hashtagArray)){
+      textHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
+    } else {
+      textHashtags.setCustomValidity('');
+    }
+  });
+
+  textHashtags.reportValidity();
 };
 
 const checkCommentsLenght = () => {//проверка валидности поля комментария на превышение лимита введеных символов
