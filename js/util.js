@@ -9,9 +9,10 @@ const getRandomNumber =  (from, to) => {
 
 export {getRandomNumber};
 
+
 // Функция проверки длины строки
-const getLeghtCheck = function (str, MAX_LENGHT) {
-  if  (MAX_LENGHT  <= str || str === '') {
+const getLeghtCheck = function (str, maxLenght) {
+  if  (maxLenght  <= str.length) {
     return false;
   }
   return true;

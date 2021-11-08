@@ -73,4 +73,4 @@ bigPictureClose.addEventListener('click', () => {//закрытие окна п�
   closeBigPicture();
 });
 
-export {fillBigPicture};
+export {fillBigPicture, onEscKeydown};
