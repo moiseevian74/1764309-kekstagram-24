@@ -5,6 +5,8 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const MIN_AVATAR = 1;
 const MAX_AVATAR = 6;
+const MIN_COMMENT = 2;
+const MAX_COMMENT = 15;
 
 const NAMES = [
   'Артём',
@@ -42,7 +44,7 @@ const DESCRIPTION = [
 
 const getCommentsArray = () => {//функция получения массива объектов комментария в кол-ве from/to
   const comments = [];
-  const numberOfComments = getRandomNumber(2, 15);
+  const numberOfComments = getRandomNumber(MIN_COMMENT, MAX_COMMENT);
   for (let i = 0; i < numberOfComments; i++) {
     const comment = {
       id: currentCount,

@@ -1,7 +1,7 @@
 import './data.js';
 import {isEscapeKey} from './util.js';
-const MAX_COMMENT_FIRST = 5;//согласно ТЗ
-
+const MAX_INDEX_OF_COMMENTS_ARRAY = 5;//согласно ТЗ
+const MIN_INDEX_OF_COMMENTS_ARRAY = 0;
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -38,18 +38,18 @@ let totalCommentsArray = [];
 
 const showFiveComments = () => {//функция показа 5 комментариев
   const allComments = totalCommentsArray.length;
-  const commentsFive = totalCommentsArray.slice(0, 5);//возвращает новый массив, содержащий копию части исходного массива(5 комментариев)
+  const commentsFive = totalCommentsArray.slice(MIN_INDEX_OF_COMMENTS_ARRAY, MAX_INDEX_OF_COMMENTS_ARRAY );//возвращает новый массив, содержащий копию части исходного массива(5 комментариев)
   fillComments(commentsFive);
   commentsLoader.classList.remove('hidden');
-  socialCommentCount.firstChild.textContent = `${MAX_COMMENT_FIRST} из `;
-  if (allComments <= MAX_COMMENT_FIRST) {
+  socialCommentCount.firstChild.textContent = `${MAX_INDEX_OF_COMMENTS_ARRAY} из `;
+  if (allComments <= MAX_INDEX_OF_COMMENTS_ARRAY) {
     commentsLoader.classList.add('hidden');
     socialCommentCount.firstChild.textContent = `${allComments} из `;
   }
 };
 
 const showMoreComments = () => {//функция подгрузки ещё +5 комментариев
-  let moreComments = socialComments.children.length + MAX_COMMENT_FIRST;
+  let moreComments = socialComments.children.length + MAX_INDEX_OF_COMMENTS_ARRAY;
   const commentsPart = totalCommentsArray.slice(socialComments.children.length, moreComments);
   fillComments(commentsPart);
   if (moreComments >= totalCommentsArray.length) {
