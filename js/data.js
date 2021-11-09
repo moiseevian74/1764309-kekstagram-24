@@ -5,6 +5,8 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const MIN_AVATAR = 1;
 const MAX_AVATAR = 6;
+const MIN_COMMENT = 2;
+const MAX_COMMENT = 15;
 
 const NAMES = [
   'Артём',
@@ -40,19 +42,27 @@ const DESCRIPTION = [
   'Я - описание фотографии',
 ];
 
+const getCommentsArray = () => {//функция получения массива объектов комментария в кол-ве from/to
+  const comments = [];
+  const numberOfComments = getRandomNumber(MIN_COMMENT, MAX_COMMENT);
+  for (let i = 0; i < numberOfComments; i++) {
+    const comment = {
+      id: currentCount,
+      avatar: `img/avatar-${  getRandomNumber(MIN_AVATAR, MAX_AVATAR)  }.svg`,
+      message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],
+      name: NAMES[getRandomNumber(0, NAMES.length - 1)],
+    };
+    comments.push(comment);
+  }
+  return comments;
+};
+
 const getArrayProfiles = () => ({
   id: counter(),
   url: `photos/${  currentCount  }.jpg`,
   description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)], //описание как массив в задании не указан, поэтому один на всех
   likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
-  comments: [
-    {
-      id: currentCount,
-      avatar: `img/avatar-${  getRandomNumber(MIN_AVATAR, MAX_AVATAR)  }.svg`,
-      message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],//для формирования текста комментария можно брать и 1 сообщение, согласно заданию
-      name: NAMES[getRandomNumber(0, NAMES.length - 1)],
-    },
-  ],
+  comments: getCommentsArray(),
 });
 
 const photoDescription = () => Array.from({length: COUNT}, getArrayProfiles);//метод формирования массива объектов

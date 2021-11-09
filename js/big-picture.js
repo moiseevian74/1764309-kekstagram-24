@@ -1,5 +1,7 @@
 import './data.js';
 import {isEscapeKey} from './util.js';
+const MAX_INDEX_OF_COMMENTS_ARRAY = 5;//согласно ТЗ
+const MIN_INDEX_OF_COMMENTS_ARRAY = 0;
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -16,9 +18,13 @@ const bigPictureClose = document.querySelector('.big-picture__cancel');//кре�
 
 const socialCommentFragment = document.createDocumentFragment();
 
+const removeComments = () => {//удаление комментариев (из массива) при закрытии окна
+  socialComments.innerHTML = '';
+};
+
 const fillComments = (items) => {//комментарии к изображению
   items.forEach(({avatar, name, message}) => {
-    const commentElement = socialComment;
+    const commentElement = socialComment.cloneNode(true);
     commentElement.querySelector('.social__picture').src = avatar;
     commentElement.querySelector('.social__picture').alt = name;
     commentElement.querySelector('.social__text').textContent = message;
@@ -26,15 +32,42 @@ const fillComments = (items) => {//комментарии к изображен�
   });
 
   socialComments.appendChild(socialCommentFragment);
-  return socialComments;
+};
+
+let totalCommentsArray = [];
+
+const showFiveComments = () => {//функция показа 5 комментариев
+  const allComments = totalCommentsArray.length;
+  const commentsFive = totalCommentsArray.slice(MIN_INDEX_OF_COMMENTS_ARRAY, MAX_INDEX_OF_COMMENTS_ARRAY );//возвращает новый массив, содержащий копию части исходного массива(5 комментариев)
+  fillComments(commentsFive);
+  commentsLoader.classList.remove('hidden');
+  socialCommentCount.firstChild.textContent = `${MAX_INDEX_OF_COMMENTS_ARRAY} из `;
+  if (allComments <= MAX_INDEX_OF_COMMENTS_ARRAY) {
+    commentsLoader.classList.add('hidden');
+    socialCommentCount.firstChild.textContent = `${allComments} из `;
+  }
+};
+
+const showMoreComments = () => {//функция подгрузки ещё +5 комментариев
+  let moreComments = socialComments.children.length + MAX_INDEX_OF_COMMENTS_ARRAY;
+  const commentsPart = totalCommentsArray.slice(socialComments.children.length, moreComments);
+  fillComments(commentsPart);
+  if (moreComments >= totalCommentsArray.length) {
+    moreComments = totalCommentsArray.length;
+    commentsLoader.classList.add('hidden');
+    socialCommentCount.firstChild.textContent = `${moreComments} из `;
+  }
+  socialCommentCount.firstChild.textContent = `${moreComments} из `;
 };
 
 const fillBigPicture = ({url, likes, comments, description}) => {//отрисовка комметариев
+  removeComments();
+  totalCommentsArray = comments;
   img.src = url;
   likesСount.textContent = likes;
   commentsCount.textContent = comments.length;
   socialCaption.textContent = description;
-  fillComments(comments);
+  showFiveComments();
   openBigPicture();
 };
 
@@ -45,27 +78,19 @@ const onEscKeydown = (evt) => {//закрытие окна при нажатии
   }
 };
 
-const removeComments = () => {//удаление комментариев (из массива) при закрытии окна
-  socialComments.removeChild(socialComments.lastChild);
-};
-
-
 function openBigPicture() {//функция - показать попап
   bigPicture.classList.remove('hidden');
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  socialCommentCount.classList.remove('hidden');
+  commentsLoader.addEventListener('click', showMoreComments);
   body.classList.add('.modal-open');
-
   document.addEventListener('keydown', onEscKeydown);
 }
 
 function closeBigPicture() {//функция - скрыть попап
   bigPicture.classList.add('hidden');
-  socialCommentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
+  socialCommentCount.classList.add('hidden');
+  commentsLoader.removeEventListener('click', showMoreComments);
   body.classList.remove('.modal-open');
-  removeComments();
-
   document.removeEventListener('keydown', onEscKeydown);
 }
 
@@ -73,4 +98,4 @@ bigPictureClose.addEventListener('click', () => {//закрытие окна п�
   closeBigPicture();
 });
 
-export {fillBigPicture, onEscKeydown};
+export {fillBigPicture};
