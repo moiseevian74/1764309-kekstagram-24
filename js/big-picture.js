@@ -1,5 +1,8 @@
 import './data.js';
 import {isEscapeKey} from './util.js';
+import {addEffect, resetFilter} from './scale.js';
+
+const effectsList = document.querySelector('.effects__list');
 const MAX_INDEX_OF_COMMENTS_ARRAY = 5;//согласно ТЗ
 const MIN_INDEX_OF_COMMENTS_ARRAY = 0;
 
@@ -84,14 +87,17 @@ function openBigPicture() {//функция - показать попап
   commentsLoader.addEventListener('click', showMoreComments);
   body.classList.add('.modal-open');
   document.addEventListener('keydown', onEscKeydown);
+  effectsList.addEventListener('click', addEffect);
 }
 
 function closeBigPicture() {//функция - скрыть попап
+  resetFilter();
   bigPicture.classList.add('hidden');
   socialCommentCount.classList.add('hidden');
   commentsLoader.removeEventListener('click', showMoreComments);
   body.classList.remove('.modal-open');
   document.removeEventListener('keydown', onEscKeydown);
+  effectsList.removeEventListener('click', addEffect);
 }
 
 bigPictureClose.addEventListener('click', () => {//закрытие окна при нажатии button "X"
