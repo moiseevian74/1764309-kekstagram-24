@@ -2,7 +2,9 @@ const btnSmaller = document.querySelector('.scale__control--smaller');
 const btnBigger = document.querySelector('.scale__control--bigger');
 const inputValue = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
-// const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevel = document.querySelector('.effect-level');
 
 const STEP = 25;
 const MIN_VALUE = 25;
@@ -31,12 +33,8 @@ btnBigger.addEventListener('click', () => {
 const resetFilter = () => {
   imgUploadPreview.style.filter = '';
   imgUploadPreview.className = '';
+  effectLevel.classList.add('hidden');
 };
-
-
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const effectLevel = document.querySelector('.effect-level');
 
 const SLIDER_PARAMETERS = {
   'chrome': {
@@ -120,4 +118,4 @@ const addEffect = (evt) => {
   }
 };
 
-export {resetFilter, addEffect};
+export {resetFilter, addEffect, imgUploadPreview};
