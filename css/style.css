@@ -510,8 +510,8 @@ main {
      -ms-flex-pack: center;
    justify-content: center;
 
-  width: 600px;
-  height: 600px;
+  width: 586px;
+  margin-bottom: 35px;
 
   background-color: #ffffff;
 }
