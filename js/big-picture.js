@@ -1,4 +1,3 @@
-import './data.js';
 import {isEscapeKey} from './util.js';
 
 const MAX_INDEX_OF_COMMENTS_ARRAY = 5;//согласно ТЗ
@@ -99,4 +98,4 @@ bigPictureClose.addEventListener('click', () => {//закрытие окна п�
   closeBigPicture();
 });
 
-export {fillBigPicture};
+export {fillBigPicture, body};
