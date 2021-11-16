@@ -1,5 +1,6 @@
 import './data.js';
 import {isEscapeKey} from './util.js';
+
 const MAX_INDEX_OF_COMMENTS_ARRAY = 5;//согласно ТЗ
 const MIN_INDEX_OF_COMMENTS_ARRAY = 0;
 

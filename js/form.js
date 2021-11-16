@@ -1,10 +1,12 @@
 import {isEscapeKey} from './util.js';
 import {getLeghtCheck} from './util.js';
+import {resetFilter, addEffect, imgUploadPreview} from './scale.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
 
+const effectsList = document.querySelector('.effects__list');
 const uploadFile = document.querySelector('#upload-file');//изначальное состояние поля для загрузки изображения
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');//форма редактирования изображения
 const body = document.querySelector('body');
@@ -83,10 +85,13 @@ function openUserModal() {//функция показа окна 'добавле
     textHashtags.addEventListener('input', checkTextHashtags);
     textDescription.addEventListener('keydown', stopEvent);
     textDescription.addEventListener('input', checkCommentsLenght);
+    effectsList.addEventListener('click', addEffect);
   });
 }
 
 function closeUserModal() {//функция закрытия окна 'добавления фотографии'
+  imgUploadPreview.style.transform = 'scale(1)';
+  resetFilter();
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   clearForm();//очистка формы
@@ -96,6 +101,7 @@ function closeUserModal() {//функция закрытия окна 'доба�
   textHashtags.removeEventListener('input', checkTextHashtags);
   textDescription.removeEventListener('keydown', stopEvent);
   textDescription.removeEventListener('input', checkCommentsLenght);
+  effectsList.removeEventListener('click', addEffect);
 }
 
 uploadFile.addEventListener('click', openUserModal);//Событие открытия окна при клике кнопки 'загрузить'
