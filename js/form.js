@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {getLeghtCheck} from './util.js';
 import {resetFilter, addEffect, imgUploadPreview} from './scale.js';
+import {sendData} from './api.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_LENGTH = 20;
@@ -9,6 +10,7 @@ const MAX_HASHTAG_COUNT = 5;
 const effectsList = document.querySelector('.effects__list');
 const uploadFile = document.querySelector('#upload-file');//изначальное состояние поля для загрузки изображения
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');//форма редактирования изображения
+const imgUploadForm = document.querySelector('.img-upload__form');
 const body = document.querySelector('body');
 const textDescription = document.querySelector('.text__description');//textarea для добавления комментария к изображению
 const uploadCancel = document.querySelector('#upload-cancel');//кнопка для закрытия формы редактирования изображения
@@ -107,3 +109,17 @@ function closeUserModal() {//функция закрытия окна 'доба�
 uploadFile.addEventListener('click', openUserModal);//Событие открытия окна при клике кнопки 'загрузить'
 
 uploadCancel.addEventListener('click', closeUserModal);//Событие закрытия окна при клике на 'X'
+
+const setUserFormSubmit = (task) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => task(),
+      () => task(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {uploadFile, closeUserModal, openUserModal, clearForm, setUserFormSubmit};
