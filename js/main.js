@@ -1,6 +1,5 @@
-import {pictures, renderPicture} from './picture.js';
-import {closeUserModal} from './form.js';
-import {setUserFormSubmit} from './form.js';
+import {onButtonClick, pictures, renderPicture} from './picture.js';
+import {closeUserModal, setUserFormSubmit} from './form.js';
 import {getData} from './api.js';
 
 const getTask = async () => {
@@ -8,6 +7,7 @@ const getTask = async () => {
 
   pictures.setData(data);
   renderPicture();
+  onButtonClick();
 
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   setUserFormSubmit(closeUserModal);
