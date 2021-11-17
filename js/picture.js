@@ -35,11 +35,12 @@ const filterDefault = (first, second) => {
   }
 };
 
-const renderPicture = () => {//запись результата функции в переменную
+const renderPicture = (similarPictures) => {//запись результата функции в переменную
 
   const pictureFragment = document.createDocumentFragment();
   const pictureItems = pictures.data;
-  pictureItems.forEach(({url, likes, comments, id, description}) => {//деструктуризация параметров объекта в переменные
+  const somePhotos = pictureItems.slice(0, similarPictures);
+  somePhotos.forEach(({url, likes, comments, id, description}) => {//деструктуризация параметров объекта в переменные
     const pictureElement = pictureTemplate.cloneNode(true);//клонирование шаблона
     pictureElement.querySelector('.picture__img').src = url;//присваивание источнику значение параметра объекта из массива
     pictureElement.querySelector('.picture__likes').textContent = likes;//вывести колличесво лайков под фотографией
