@@ -1,14 +1,14 @@
-const btnSmaller = document.querySelector('.scale__control--smaller');
-const btnBigger = document.querySelector('.scale__control--bigger');
-const inputValue = document.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const effectLevel = document.querySelector('.effect-level');
-
 const STEP = 25;
 const MIN_VALUE = 25;
 const MAX_VALUE = 100;
+
+const btnSmaller = document.querySelector('.scale__control--smaller');
+const btnBigger = document.querySelector('.scale__control--bigger');
+const inputValue = document.querySelector('.scale__control--value');
+const imgUploadPreview = document.querySelector('.img-upload__picture');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevel = document.querySelector('.effect-level');
 
 let currentValue = 100;
 

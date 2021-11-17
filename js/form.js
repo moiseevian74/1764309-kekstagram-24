@@ -15,8 +15,8 @@ const body = document.querySelector('body');
 const textDescription = document.querySelector('.text__description');//textarea для добавления комментария к изображению
 const uploadCancel = document.querySelector('#upload-cancel');//кнопка для закрытия формы редактирования изображения
 const textHashtags = document.querySelector('.text__hashtags');//input для добавления хэш-тегов
-const btnSubmit = document.querySelector('.img-upload__submit');//кнопка отправки формы
 const regularValue = /^#[A-Za-zА-Яа-яЁё0-9#]{1,19}$|(^$)/;//регулярное выражение для хэш-тегов
+const symbols = /^#\S*#\S*/;
 
 function findDuplicates(array) {//Функция для поиска дубликата
   return (new Set(array)).size !== array.length;
@@ -33,6 +33,8 @@ const checkTextHashtags = () => {//проверка валидности пол�
       textHashtags.setCustomValidity('хеш-тег должен начинаться с решётки #');
     } else if (hashtag === '#'){
       textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки #');
+    } else if (symbols.test(hashtag)) {
+      textHashtags.setCustomValidity('Хэш-теги должны разделяться пробелами.');
     } else if (hashtag.length > MAX_HASHTAG_LENGTH){
       textHashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку #');
     } else if (!regularValue.test(hashtag)){
@@ -53,10 +55,8 @@ const checkCommentsLenght = () => {//проверка валидности по�
   const commentLength = getLeghtCheck(textDescription.value, MAX_COMMENT_LENGTH);
   if (!commentLength) {
     textDescription.setCustomValidity(`Длина комментария не может составлять больше 140 символов. Лишних символов: ${textDescription.value.length - MAX_COMMENT_LENGTH}.`);
-    btnSubmit.disabled = true;
   } else {
     textDescription.setCustomValidity('');
-    btnSubmit.disabled = false;
   }
   textDescription.reportValidity();
 };

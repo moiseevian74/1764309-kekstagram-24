@@ -1,4 +1,4 @@
-import {showAlert, showForm} from './data_exchange.js';
+import {showAlert, showForm} from './data-exchange.js';
 import {clearForm} from './form.js';
 import {resetFilter} from './scale.js';
 
