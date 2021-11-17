@@ -72,25 +72,20 @@ const onButtonClick = () => {
   filterForm.addEventListener('click', debounce((evt) => {
     const makeDebounce = debounce(() => renderPicture());
     const makeRandomDebounce = debounce(() => renderPicture(10));
-    const repeat = () => {
-      clearPicture();
-      removeFilter();
-    };
+    clearPicture();
+    removeFilter();
     switch (evt.target.id) {
       case 'filter-default':
-        repeat();
         evt.target.classList.add('img-filters__button--active');
         pictures.data.sort(filterDefault);
         makeDebounce();
         break;
       case 'filter-discussed':
-        repeat();
         evt.target.classList.add('img-filters__button--active');
         pictures.data.sort(filterDiscussed);
         makeDebounce();
         break;
       case 'filter-random':
-        repeat();
         evt.target.classList.add('img-filters__button--active');
         pictures.data.sort(getRandomPicture);
         makeRandomDebounce();
