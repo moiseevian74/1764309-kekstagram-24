@@ -69,31 +69,34 @@ const clearPicture = () => {
 };
 
 const onButtonClick = () => {
-  filterForm.addEventListener('click', (evt) => {
+  filterForm.addEventListener('click', debounce((evt) => {
     const makeDebounce = debounce(() => renderPicture());
     const makeRandomDebounce = debounce(() => renderPicture(10));
-    if (evt.target.id === 'filter-default') {
+    const repeat = () => {
       clearPicture();
       removeFilter();
-      evt.target.classList.add('img-filters__button--active');
-      pictures.data.sort(filterDefault);
-      makeDebounce();
+    };
+    switch (evt.target.id) {
+      case 'filter-default':
+        repeat();
+        evt.target.classList.add('img-filters__button--active');
+        pictures.data.sort(filterDefault);
+        makeDebounce();
+        break;
+      case 'filter-discussed':
+        repeat();
+        evt.target.classList.add('img-filters__button--active');
+        pictures.data.sort(filterDiscussed);
+        makeDebounce();
+        break;
+      case 'filter-random':
+        repeat();
+        evt.target.classList.add('img-filters__button--active');
+        pictures.data.sort(getRandomPicture);
+        makeRandomDebounce();
+        break;
     }
-    if (evt.target.id === 'filter-discussed') {
-      clearPicture();
-      removeFilter();
-      evt.target.classList.add('img-filters__button--active');
-      pictures.data.sort(filterDiscussed);
-      makeDebounce();
-    }
-    if (evt.target.id === 'filter-random') {
-      clearPicture();
-      removeFilter();
-      evt.target.classList.add('img-filters__button--active');
-      pictures.data.sort(getRandomPicture);
-      makeRandomDebounce();
-    }
-  });
+  }));
 };
 
 export {renderPicture, pictures, onButtonClick};
