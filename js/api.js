@@ -1,6 +1,4 @@
-import {showAlert, showForm} from './data-exchange.js';
-import {clearForm} from './form.js';
-import {resetFilter} from './scale.js';
+import {showAlert} from './data-exchange.js';
 
 const getData = async () => {
   try {
@@ -22,14 +20,8 @@ const sendData = (onSuccess, onFail, body) => {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-        clearForm();
-        resetFilter();
-        showForm();
       } else {
         onFail('Не удалось отправить форму. Попробуйте ещё раз');
-        clearForm();
-        resetFilter();
-        showForm(false);
       }
     })
     .catch(() => {

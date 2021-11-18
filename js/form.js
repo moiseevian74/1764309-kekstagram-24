@@ -1,7 +1,7 @@
-import {isEscapeKey} from './util.js';
-import {getLeghtCheck} from './util.js';
+import {isEscapeKey, getLeghtCheck} from './util.js';
 import {resetFilter, addEffect, imgUploadPreview} from './scale.js';
 import {sendData} from './api.js';
+import {showForm} from './data-exchange.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_LENGTH = 20;
@@ -110,13 +110,27 @@ uploadFile.addEventListener('click', openUserModal);//Событие откры�
 
 uploadCancel.addEventListener('click', closeUserModal);//Событие закрытия окна при клике на 'X'
 
-const setUserFormSubmit = (task) => {
+const taskError = () => {
+  clearForm();
+  resetFilter();
+  showForm(false);
+};
+
+
+const taskSuccess = () => {
+  clearForm();
+  resetFilter();
+  showForm();
+};
+
+
+const setUserFormSubmit = () => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
-      () => task(),
-      () => task(),
+      () => taskSuccess(),
+      () => taskError(),
       new FormData(evt.target),
     );
   });
